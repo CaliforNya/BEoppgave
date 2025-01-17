@@ -122,3 +122,52 @@ rebuyAvailable: true,
 *A regular user can sign up for multiple tournaments.
 *An admin user can create and manage multiple tournaments.
 \*A tournament can have many players but only one creator (the admin).
+
+# Poker Club Tournament Manager
+
+---
+
+## DIAGRAMS/CHARTS
+
+Entity-relation diagram for our database relationships:
+
+```mermaid
+erDiagram
+    User {
+        int UserId
+        string UserName
+        string HashPassword
+        string Role
+    }
+    Tournament {
+        int TournamentId
+        string TournamentName
+        DateTime TournamentDate
+        string Status
+        int MaxPlayers
+        string GameType
+        string BountyType
+        decimal BuyIn
+        bool RebuyAvailable
+    }
+    UserSignupTournamentRelations {
+        int UserId
+        int TournamentId
+    }
+    UserAdminTournamentRelations {
+        int UserId
+        int TournamentId
+    }
+    UserOwnerTournamentRelation {
+        int UserId
+        int TournamentId
+    }
+    %% Relationships
+    User ||--o{ UserSignupTournamentRelations : "Many-to-Many (Signups)"
+    UserSignupTournamentRelations ||--o{ Tournament : "Many-to-Many (Signups)"
+    User ||--o{ UserAdminTournamentRelations : "Many-to-Many (Admins)"
+    UserAdminTournamentRelations ||--o{ Tournament : "Many-to-Many (Admins)"
+    User ||--o| UserOwnerTournamentRelation : "One-to-One (Owner)"
+    UserOwnerTournamentRelation ||--o| Tournament : "One-to-One (Owner)"
+
+```
