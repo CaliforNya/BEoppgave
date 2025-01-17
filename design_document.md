@@ -123,13 +123,11 @@ rebuyAvailable: true,
 *An admin user can create and manage multiple tournaments.
 \*A tournament can have many players but only one creator (the admin).
 
-# Poker Club Tournament Manager
-
 ---
 
 ## DIAGRAMS/CHARTS
 
-Entity-relation diagram for our database relationships:
+# Entity-relation diagram for database relationships:
 
 ```mermaid
 erDiagram
@@ -170,4 +168,24 @@ erDiagram
     User ||--o| UserOwnerTournamentRelation : "One-to-One (Owner)"
     UserOwnerTournamentRelation ||--o| Tournament : "One-to-One (Owner)"
 
+```
+
+## Data Flow Diagram
+
+```mermaid
+sequenceDiagram
+    participant httpRequest as HTTP Request
+    participant ApiDefaultRoute as API Default Route
+    participant TournamentController as Tournament Controller
+    participant Firebase as Firebase (Firestore)
+    participant Database as Firestore Database
+
+    httpRequest ->>+ ApiDefaultRoute: /GET (Request for Tournaments Data)
+    ApiDefaultRoute ->>+ TournamentController: Get active tournaments
+    TournamentController ->>+ Firebase: Query Firestore for active tournaments
+    Firebase ->>+ Database: Fetch active tournaments
+    Database -->>- Firebase: Return list of tournaments
+    Firebase -->>- TournamentController: Return tournaments data
+    TournamentController -->>- ApiDefaultRoute: Return tournaments data to user
+    ApiDefaultRoute -->>- httpRequest: Send tournaments data in response
 ```
