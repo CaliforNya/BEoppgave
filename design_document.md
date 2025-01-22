@@ -258,7 +258,7 @@ participant UserDatabase (Firebase)
 
 # "Tokes doesnt exist" diagram
 
-    ``` mermaid
+```mermaid
 
     sequenceDiagram
     actor User
@@ -286,7 +286,7 @@ participant UserDatabase (Firebase)
         View(Login) -->>- User: "Displays error feedback"
     end
 
-    ```
+```
 
 # "Create new user" diagram (with dbl verfication)
 
