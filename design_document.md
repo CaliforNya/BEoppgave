@@ -286,11 +286,11 @@ participant UserDatabase (Firebase)
         View(Login) -->>- User: "Displays error feedback"
     end
 
-````
+    ```
 
 # "Create new user" diagram (with dbl verfication)
 
-``` mermaid
+```mermaid
 sequenceDiagram
 actor AnonymousUser
 participant LoginController
@@ -312,7 +312,7 @@ participant EmailVerificationService
         LoginController -->>- AnonymousUser: HTTP 400 Bad Request with error message
     end
 
-````
+```
 
 # Home page data flow diagram
 
@@ -438,5 +438,13 @@ participant FirestoreDatabase
     else User is not authenticated
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
+
+```
+
+```
+
+```
+
+```
 
 ```
