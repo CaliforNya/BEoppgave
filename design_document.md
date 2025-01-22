@@ -136,12 +136,13 @@ rebuyAvailable: true,
 
 # Tournament Management Flowchart
 
-```mermaid
+::: mermaid
+
 flowchart TD
-    A[Start] --> B[User logs in]
-    B --> C{Is the user an admin?}
-    C -- Yes --> D[Show admin dashboard]
-    C -- No --> E[Show player dashboard]
+A[Start] --> B[User logs in]
+B --> C{Is the user an admin?}
+C -- Yes --> D[Show admin dashboard]
+C -- No --> E[Show player dashboard]
 
     D --> F[Admin chooses action]
     E --> G[Player chooses action]
@@ -169,58 +170,57 @@ flowchart TD
     U --> W
     T --> W[End]
 
-```
+:::
 
 # Entity-relation diagram for database relationships:
 
-```mermaid
+::: mermaid
 erDiagram
-    User {
-        int UserId
-        string UserName
-        string HashPassword
-        string Role
-    }
-    Tournament {
-        int TournamentId
-        string TournamentName
-        DateTime TournamentDate
-        string Status
-        int MaxPlayers
-        string GameType
-        string BountyType
-        decimal BuyIn
-        bool RebuyAvailable
-    }
-    UserSignupTournamentRelations {
-        int UserId
-        int TournamentId
-    }
-    UserTournamentRoles {
-        int UserId
-        int TournamentId
-        string Role  // Role can be 'creator', 'admin', 'participant'
-    }
-    %% Relationships
-    User ||--o{ UserSignupTournamentRelations : "Many-to-Many (Signups)"
-    UserSignupTournamentRelations ||--o{ Tournament : "Many-to-Many (Signups)"
-    User ||--o{ UserTournamentRoles : "Many-to-Many (Roles)"
-    UserTournamentRoles ||--o{ Tournament : "Many-to-Many (Roles)"
-    User ||--o| UserTournamentRoles : "One-to-One (Creator)"
-    UserTournamentRoles ||--o| Tournament : "One-to-One (Creator)"
+User {
+int UserId
+string UserName
+string HashPassword
+string Role
+}
+Tournament {
+int TournamentId
+string TournamentName
+DateTime TournamentDate
+string Status
+int MaxPlayers
+string GameType
+string BountyType
+decimal BuyIn
+bool RebuyAvailable
+}
+UserSignupTournamentRelations {
+int UserId
+int TournamentId
+}
+UserTournamentRoles {
+int UserId
+int TournamentId
+string Role // Role can be 'creator', 'admin', 'participant'
+}
+%% Relationships
+User ||--o{ UserSignupTournamentRelations : "Many-to-Many (Signups)"
+UserSignupTournamentRelations ||--o{ Tournament : "Many-to-Many (Signups)"
+User ||--o{ UserTournamentRoles : "Many-to-Many (Roles)"
+UserTournamentRoles ||--o{ Tournament : "Many-to-Many (Roles)"
+User ||--o| UserTournamentRoles : "One-to-One (Creator)"
+UserTournamentRoles ||--o| Tournament : "One-to-One (Creator)"
 
-
-```
+:::
 
 # Data Flow Diagram
 
-```mermaid
+::: mermaid
 sequenceDiagram
-    participant httpRequest as HTTP Request
-    participant ApiDefaultRoute as API Default Route
-    participant TournamentController as Tournament Controller
-    participant Firebase as Firebase (Firestore)
-    participant Database as Firestore Database
+participant httpRequest as HTTP Request
+participant ApiDefaultRoute as API Default Route
+participant TournamentController as Tournament Controller
+participant Firebase as Firebase (Firestore)
+participant Database as Firestore Database
 
     httpRequest ->>+ ApiDefaultRoute: /GET (Request for Tournaments Data)
     ApiDefaultRoute ->>+ TournamentController: Get active tournaments
@@ -230,17 +230,18 @@ sequenceDiagram
     Firebase -->>- TournamentController: Return tournaments data
     TournamentController -->>- ApiDefaultRoute: Return tournaments data to user
     ApiDefaultRoute -->>- httpRequest: Send tournaments data in response
-```
+
+:::
 
 # Login token validation diagram
 
-```mermaid
+::: mermaid
 sequenceDiagram
-    actor User
-    participant View(Index)
-    participant LoginController
-    participant LoginService
-    participant UserDatabase (Firebase)
+actor User
+participant View(Index)
+participant LoginController
+participant LoginService
+participant UserDatabase (Firebase)
 
     User ->>+ View(Index): "Enters Index View"
     View(Index) ->>+ LoginService: "Checks for existing token in cookies"
@@ -253,11 +254,11 @@ sequenceDiagram
         View(Index) ->>+ User: "Displays Unauthenticated (anonymous) view"
     end
 
-```
+:::
 
 # "Tokes doesnt exist" diagram
 
-    ```mermaid
+    ::: mermaid
 
     sequenceDiagram
     actor User
@@ -285,17 +286,17 @@ sequenceDiagram
         View(Login) -->>- User: "Displays error feedback"
     end
 
-````
+:::
 
 # "Create new user" diagram (with dbl verfication)
 
-```mermaid
+::: mermaid
 sequenceDiagram
-    actor AnonymousUser
-    participant LoginController
-    participant FirebaseAuthService
-    participant FirestoreDatabase
-    participant EmailVerificationService
+actor AnonymousUser
+participant LoginController
+participant FirebaseAuthService
+participant FirestoreDatabase
+participant EmailVerificationService
 
     AnonymousUser ->>+ LoginController: /POST /New (formData)
     LoginController ->>+ FirebaseAuthService: Validate required fields and create user
@@ -311,18 +312,17 @@ sequenceDiagram
         LoginController -->>- AnonymousUser: HTTP 400 Bad Request with error message
     end
 
-
-````
+:::
 
 # Home page data flow diagram
 
-```mermaid
+::: mermaid
 
 sequenceDiagram
-    actor User
-    participant EventController
-    participant Firestore
-    participant FirebaseAuth
+actor User
+participant EventController
+participant Firestore
+participant FirebaseAuth
 
     User ->>+ EventController: /GET request
     EventController ->>+ Firestore: Fetch public events
@@ -337,18 +337,19 @@ sequenceDiagram
     else User is anonymous
         EventController -->>- User: Return JSON (public events only)
     end
-```
+
+:::
 
 # New turnament diagram
 
-```mermaid
+::: mermaid
 
 sequenceDiagram
-    actor User
-    participant TournamentController
-    participant DtoConstructor
-    participant FirebaseAuth
-    participant FirestoreDatabase
+actor User
+participant TournamentController
+participant DtoConstructor
+participant FirebaseAuth
+participant FirestoreDatabase
 
     User ->>+ TournamentController: /POST /newTournament (jsonData)
     TournamentController ->>+ FirebaseAuth: Check if user is authenticated
@@ -368,19 +369,20 @@ sequenceDiagram
     else User is not authenticated
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
-```
+
+:::
 
 # Edit turnament diagram
 
-```mermaid
+::: mermaid
 
 sequenceDiagram
-    actor User
-    participant TournamentController
-    participant AuthorizationService
-    participant DtoConstructor
-    participant FirebaseAuth
-    participant FirestoreDatabase
+actor User
+participant TournamentController
+participant AuthorizationService
+participant DtoConstructor
+participant FirebaseAuth
+participant FirestoreDatabase
 
     User ->>+ TournamentController: /PATCH /{id} (jsonData)
     TournamentController ->>+ FirebaseAuth: Check if user is authenticated
@@ -407,18 +409,17 @@ sequenceDiagram
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-
-```
+:::
 
 # Sign up to turnament diagram
 
-```mermaid
+::: mermaid
 sequenceDiagram
-    actor User
-    participant TournamentController
-    participant AuthorizationService
-    participant FirebaseAuth
-    participant FirestoreDatabase
+actor User
+participant TournamentController
+participant AuthorizationService
+participant FirebaseAuth
+participant FirestoreDatabase
 
     User ->>+ TournamentController: /POST /Signup/{id} (signup request)
     TournamentController ->>+ FirebaseAuth: Check if user is authenticated
@@ -438,5 +439,4 @@ sequenceDiagram
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-
-```
+:::
