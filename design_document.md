@@ -132,6 +132,45 @@ rebuyAvailable: true,
 
 ## DIAGRAMS/CHARTS
 
+---
+
+# Tournament Management Flowchart
+
+```mermaid
+flowchart TD
+    A[Start] --> B[User logs in]
+    B --> C{Is the user an admin?}
+    C -- Yes --> D[Show admin dashboard]
+    C -- No --> E[Show player dashboard]
+
+    D --> F[Admin chooses action]
+    E --> G[Player chooses action]
+
+    F --> H{Is the action to create or edit a tournament?}
+    G --> I{Is the action to join a tournament?}
+
+    H -- Yes --> J[Show tournament creation/edit form]
+    H -- No --> I
+
+    J --> L[Create or update tournament]
+    L --> M[Show tournament creation/update confirmation]
+
+    I -- Yes --> N[Show tournament details]
+    I -- No --> T[Show updated player dashboard]
+
+    N --> O{Is there space in the tournament?}
+    O -- Yes --> P[Add player to tournament]
+    O -- No --> Q[Show message about full tournament]
+    P --> R[Show player added confirmation]
+    Q --> S[Player selects another tournament]
+    S --> T[Show updated tournament list]
+    R --> T
+    M --> U[Show updated admin dashboard]
+    U --> W
+    T --> W[End]
+
+```
+
 # Entity-relation diagram for database relationships:
 
 ```mermaid
@@ -173,7 +212,7 @@ erDiagram
 
 ```
 
-## Data Flow Diagram
+# Data Flow Diagram
 
 ```mermaid
 sequenceDiagram
@@ -193,7 +232,7 @@ sequenceDiagram
     ApiDefaultRoute -->>- httpRequest: Send tournaments data in response
 ```
 
-### Login token validation diagram
+# Login token validation diagram
 
 ```mermaid
 sequenceDiagram
@@ -216,9 +255,9 @@ sequenceDiagram
 
 ```
 
-#### "Tokes doesnt exist" diagram
+# "Tokes doesnt exist" diagram
 
-    ````mermaid
+    ```mermaid
 
     sequenceDiagram
     actor User
@@ -246,11 +285,11 @@ sequenceDiagram
         View(Login) -->>- User: "Displays error feedback"
     end
 
-`````
+````
 
-##### "Create new user" diagram (with dbl verfication)
+# "Create new user" diagram (with dbl verfication)
 
-````mermaid
+```mermaid
 sequenceDiagram
     actor AnonymousUser
     participant LoginController
@@ -273,9 +312,9 @@ sequenceDiagram
     end
 
 
-`````
+````
 
-###### Home page data flow diagram
+# Home page data flow diagram
 
 ```mermaid
 
@@ -300,7 +339,7 @@ sequenceDiagram
     end
 ```
 
-###### New turnament diagram
+# New turnament diagram
 
 ```mermaid
 
@@ -331,7 +370,7 @@ sequenceDiagram
     end
 ```
 
-###### Edit turnament diagram
+# Edit turnament diagram
 
 ```mermaid
 
@@ -371,7 +410,7 @@ sequenceDiagram
 
 ```
 
-###### Sign up to turnament diagram
+# Sign up to turnament diagram
 
 ```mermaid
 sequenceDiagram
@@ -399,9 +438,5 @@ sequenceDiagram
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-
-```
-
-```
 
 ```
