@@ -200,7 +200,7 @@ int TournamentId
 UserTournamentRoles {
 int UserId
 int TournamentId
-string Role // Role can be 'creator', 'admin', 'participant'
+string Role
 }
 %% Relationships
 User ||--o{ UserSignupTournamentRelations : "Many-to-Many (Signups)"
