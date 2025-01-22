@@ -136,7 +136,7 @@ rebuyAvailable: true,
 
 # Tournament Management Flowchart
 
-::: mermaid
+```mermaid
 
 flowchart TD
 A[Start] --> B[User logs in]
@@ -170,11 +170,11 @@ C -- No --> E[Show player dashboard]
     U --> W
     T --> W[End]
 
-:::
+```
 
 # Entity-relation diagram for database relationships:
 
-::: mermaid
+```mermaid
 erDiagram
 User {
 int UserId
@@ -210,11 +210,11 @@ UserTournamentRoles ||--o{ Tournament : "Many-to-Many (Roles)"
 User ||--o| UserTournamentRoles : "One-to-One (Creator)"
 UserTournamentRoles ||--o| Tournament : "One-to-One (Creator)"
 
-:::
+```
 
 # Data Flow Diagram
 
-::: mermaid
+```mermaid
 sequenceDiagram
 participant httpRequest as HTTP Request
 participant ApiDefaultRoute as API Default Route
@@ -231,11 +231,11 @@ participant Database as Firestore Database
     TournamentController -->>- ApiDefaultRoute: Return tournaments data to user
     ApiDefaultRoute -->>- httpRequest: Send tournaments data in response
 
-:::
+```
 
 # Login token validation diagram
 
-::: mermaid
+```mermaid
 sequenceDiagram
 actor User
 participant View(Index)
@@ -254,11 +254,11 @@ participant UserDatabase (Firebase)
         View(Index) ->>+ User: "Displays Unauthenticated (anonymous) view"
     end
 
-:::
+```
 
 # "Tokes doesnt exist" diagram
 
-    ::: mermaid
+    ``` mermaid
 
     sequenceDiagram
     actor User
@@ -286,11 +286,11 @@ participant UserDatabase (Firebase)
         View(Login) -->>- User: "Displays error feedback"
     end
 
-:::
+````
 
 # "Create new user" diagram (with dbl verfication)
 
-::: mermaid
+``` mermaid
 sequenceDiagram
 actor AnonymousUser
 participant LoginController
@@ -312,11 +312,11 @@ participant EmailVerificationService
         LoginController -->>- AnonymousUser: HTTP 400 Bad Request with error message
     end
 
-:::
+````
 
 # Home page data flow diagram
 
-::: mermaid
+```mermaid
 
 sequenceDiagram
 actor User
@@ -338,11 +338,11 @@ participant FirebaseAuth
         EventController -->>- User: Return JSON (public events only)
     end
 
-:::
+```
 
 # New turnament diagram
 
-::: mermaid
+```mermaid
 
 sequenceDiagram
 actor User
@@ -370,11 +370,11 @@ participant FirestoreDatabase
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-:::
+```
 
 # Edit turnament diagram
 
-::: mermaid
+```mermaid
 
 sequenceDiagram
 actor User
@@ -409,11 +409,11 @@ participant FirestoreDatabase
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-:::
+```
 
 # Sign up to turnament diagram
 
-::: mermaid
+```mermaid
 sequenceDiagram
 actor User
 participant TournamentController
@@ -439,4 +439,4 @@ participant FirestoreDatabase
         TournamentController -->>- User: HTTP 401 Unauthorized (User needs to log in)
     end
 
-:::
+```
